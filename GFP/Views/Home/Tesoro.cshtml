@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Consolidado de Pagos";
+    ViewData["Title"] = "Resuesta Tesoro";
 }
 <h1>@ViewData["Title"]</h1>
 
@@ -11,13 +11,13 @@
 <div class="text-center">
     <div id="pnlTableSocialProgram" class="panel-body">
         <div class="table-responsive">
-            <table id="tblConsolidatePayments" class="display">
+            <table id="tblTresury" class="display">
                 <thead>
                     <tr>
-                        <th>Numero de Identificacion</th>
-                        <th>Nombre</th>
-                        <th>IBAN</th>
-                        <th>Monto Consolidado</th>
+                        <th>Entidad Bien Social</th>
+                        <th>Monto Total</th>
+                        <th>Batch Procesado</th>
+                        <th>Status</th>
                     </tr>
                 </thead>
             </table>
@@ -25,6 +25,6 @@
     </div>
 </div>
 
-<script src="~/js/consolidate.js" asp-append-version="true"></script>
+<script src="~/js/tresury.js" asp-append-version="true"></script>
 
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js" />

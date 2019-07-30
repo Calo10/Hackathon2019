@@ -12,6 +12,10 @@ namespace GFP.Models
 
         Task<List<SocialProgramModel>> GetRuleSocialPrograms();
 
+        Task<List<TresuryBatchValidationModel>> GetTresury();
+
+        Task<List<ConsolidatePaymentModel>> GetConsolidatePayments();
+
         Task<bool> UploadProgramsAsync(List<SocialProgramModel> lstSocialPrograms);
 
         Task<List<RulesModel>> GetRules();

@@ -118,5 +118,39 @@ namespace GFP.Controllers
                 return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
             }
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetTresury()
+        {
+            try
+            {
+                return Ok(await _ReceiveDataProvider.GetTresury());
+            }
+            catch (MySqlException ex)
+            {
+                return StatusCode((int)HttpStatusCode.Conflict, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetConsolidatePayments()
+        {
+            try
+            {
+                return Ok(await _ReceiveDataProvider.GetConsolidatePayments());
+            }
+            catch (MySqlException ex)
+            {
+                return StatusCode((int)HttpStatusCode.Conflict, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
+            }
+        }
     }
 }

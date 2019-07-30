@@ -13,7 +13,12 @@ namespace GFP.Models
         private const string SP_UpdateSocialPrograms = "SP_UpdateSocialPrograms";
         private const string SP_GetElegibleData = "SP_GetElegibleData";
         private const string SP_GetRules = "SP_GetRules";
+        private const string SP_GetTresury = "SP_GetRules";
         private const string SP_UpdateSocialProgramsRules = "SP_UpdateSocialProgramsRules";
+        private const string SP_GetTresuryForValidation = "SP_GetTresuryForValidation";
+        private const string SP_UpdateSocialProgramsTresuryValidation = "SP_UpdateSocialProgramsTresuryValidation";
+        private const string SP_GetTresuryStatus = "SP_GetTresuryStatus";
+        private const string SP_GetPaymentConsolidate = "SP_GetPaymentConsolidate";
         #endregion
 
         private readonly string _conString;
@@ -31,6 +36,11 @@ namespace GFP.Models
             return await DbConnectionHelper.BulkTransaction(_conString, _conType, SP_BulkSocialPrograms, list, true);
         }
 
+        public async Task<IEnumerable<dynamic>> GetConsolidatePayments()
+        {
+            return await DbConnectionHelper.QueryAsync(_conString, _conType, SP_GetPaymentConsolidate, null, true);
+        }
+
         public async Task<IEnumerable<dynamic>> GetElegibleSocialProgramsAsync()
         {
             return await DbConnectionHelper.QueryAsync(_conString, _conType, SP_GetElegibleData, null, true);
@@ -44,6 +54,16 @@ namespace GFP.Models
         public async Task<IEnumerable<dynamic>> GetRulesAsync()
         {
             return await DbConnectionHelper.QueryAsync(_conString, _conType, SP_GetRules, null, true);
+        }
+
+        public async Task<IEnumerable<dynamic>> GetTresureForValidation()
+        {
+            return await DbConnectionHelper.QueryAsync(_conString, _conType, SP_GetTresuryForValidation, null, true);
+        }
+
+        public async Task<IEnumerable<dynamic>> GetTresury()
+        {
+            return await DbConnectionHelper.QueryAsync(_conString, _conType, SP_GetTresuryStatus, null, true);
         }
 
         public async Task<int> UpdateSocialProgramAsync(string id, SocialProgramModel socialProgram)
@@ -63,6 +83,15 @@ namespace GFP.Models
                 id,
                 socialProgram.rules_break,
                 socialProgram.batch_id
+            }, true);
+        }
+
+        public async Task<int> UpdateSocialProgramTresuryValidationAsync(string id, string tresuryValidated)
+        {
+            return await DbConnectionHelper.ExecuteAsync(_conString, _conType, SP_UpdateSocialProgramsTresuryValidation, new
+            {
+                batch_id = id,
+                tresury_validated = tresuryValidated
             }, true);
         }
     }

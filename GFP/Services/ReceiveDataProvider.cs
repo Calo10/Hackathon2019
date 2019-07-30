@@ -48,7 +48,27 @@ namespace GFP.Services
             if (data == null)
                 throw new ArgumentException(string.Format("Format Error"));
 
-            return data.Select(ConvertFromData).ToList(); ;
+            return data.Select(ConvertFromData).ToList();
+        }
+
+        public async Task<List<TresuryBatchValidationModel>> GetTresury()
+        {
+            var data = await _receiveData.GetTresury();
+
+            if (data == null)
+                throw new ArgumentException(string.Format("Format Error"));
+
+            return data.Select(ConvertFromDataTresuryValidation).ToList();
+        }
+
+        public async Task<List<ConsolidatePaymentModel>> GetConsolidatePayments()
+        {
+            var data = await _receiveData.GetConsolidatePayments();
+
+            if (data == null)
+                throw new ArgumentException(string.Format("Format Error"));
+
+            return data.Select(ConvertFromDataConsolidatePayments).ToList();
         }
 
         public async Task<bool> UploadProgramsAsync(List<SocialProgramModel> lstSocialPrograms)
@@ -98,6 +118,15 @@ namespace GFP.Services
                 }
             }
 
+            //STEP 4 Verify against Tresury
+            var respose = await TresuryValidation();
+
+            //STEP 5 Consolidate Payments
+            if (respose)
+            {
+
+            }
+
             return result == 0 ? false : true;
         }
 
@@ -118,6 +147,58 @@ namespace GFP.Services
             return result == 0 ? false : true;
         }
 
+        public async Task<bool> TresuryValidation()
+        {
+            var data = await _receiveData.GetTresureForValidation();
+
+            if (data == null)
+                throw new ArgumentException(string.Format("Format Error"));
+
+            var lstTresuryValidationBatch = data.Select(ConvertFromDataTresuryValidation).ToList();
+
+            foreach (var item in lstTresuryValidationBatch)
+            {
+                var ans = TresuryConsult(item);
+
+                if (ans)
+                {
+                    var response = _receiveData.UpdateSocialProgramTresuryValidationAsync(item.BatchId, "S");
+                }
+                else
+                {
+                    var response = _receiveData.UpdateSocialProgramTresuryValidationAsync(item.BatchId, "N");
+                }
+
+            }
+
+            return true;
+        }
+
+        private bool TresuryConsult(TresuryBatchValidationModel tresuryBatchValidationModel)
+        {
+            //using (HttpClient client = new HttpClient())
+            //{
+            //
+            //    var uri = new Uri("******TRESURY API******");
+            //
+            //    var json = JsonConvert.SerializeObject(
+            //        new 
+            //        {
+            //            EntityId = tresuryBatchValidationModel.EntityID,
+            //            Amount = tresuryBatchValidationModel.TotalAmount
+            //        }
+            //    );
+            //
+            //    var content = new StringContent(json, Encoding.UTF8, "application/json");
+            //    HttpResponseMessage response = client.PostAsync(uri, content).Result;
+            //    string ans = response.Content.ReadAsStringAsync().Result;
+            //
+            //    return JsonConvert.DeserializeObject<ElegibleResponseModel>(ans);
+            //}
+
+            return true;
+        }
+
         #region Private Methods
         private ElegibleResponseModel ProcessEligibles(ElegibleModel elegible)
         {
@@ -135,7 +216,6 @@ namespace GFP.Services
                 return JsonConvert.DeserializeObject<ElegibleResponseModel>(ans);
             }
         }
-
 
         private string RunRules(SocialProgramModel socialProgram, List<SocialProgramModel> lstSocialProgram)
         {
@@ -190,6 +270,20 @@ namespace GFP.Services
             return validation;
         }
 
+        private static TresuryBatchValidationModel ConvertFromDataTresuryValidation(dynamic data)
+        {
+            if (data == null)
+                return null;
+
+            return new TresuryBatchValidationModel
+            {
+                BatchId = data.batch_id,
+                TotalAmount = data.total_amount.ToString(),
+                TresuryValidated = data.tresury_validated
+            };
+        }
+
+
         private static RulesModel ConvertFromDataRules(dynamic data)
         {
             if (data == null)
@@ -222,6 +316,20 @@ namespace GFP.Services
                 value = data.Value,
                 is_Elegible = data.is_Elegible,
                 rules_break = data.rules_break
+            };
+        }
+
+        private static ConsolidatePaymentModel ConvertFromDataConsolidatePayments(dynamic data)
+        {
+            if (data == null)
+                return null;
+
+            return new ConsolidatePaymentModel
+            {
+                Id = data.id,
+                FirstName = data.first_name,
+                total_amount = data.total_amount.ToString(),
+                IBAN = data.IBAN
             };
         }
 
