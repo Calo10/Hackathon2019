@@ -67,5 +67,56 @@ namespace GFP.Controllers
                 return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
             }
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetElegibleSocialPrograms()
+        {
+            try
+            {
+                return Ok(await _ReceiveDataProvider.GetElegibleSocialPrograms());
+            }
+            catch (MySqlException ex)
+            {
+                return StatusCode((int)HttpStatusCode.Conflict, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetRuleSocialPrograms()
+        {
+            try
+            {
+                return Ok(await _ReceiveDataProvider.GetRuleSocialPrograms());
+            }
+            catch (MySqlException ex)
+            {
+                return StatusCode((int)HttpStatusCode.Conflict, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetRules()
+        {
+            try
+            {
+                return Ok(await _ReceiveDataProvider.GetRules());
+            }
+            catch (MySqlException ex)
+            {
+                return StatusCode((int)HttpStatusCode.Conflict, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
+            }
+        }
     }
 }

@@ -30,6 +30,11 @@ namespace GFP.Controllers
             return View();
         }
 
+        public IActionResult AdminReglas()
+        {
+            return View();
+        }
+
         public IActionResult Consolidado()
         {
             return View();

@@ -12,7 +12,7 @@ var jq = $(document);
 
 function GetAllReceiveData ()
 {
-    debugger;
+   
     var lstReceiveData;
 
     $.ajax({
@@ -37,11 +37,22 @@ function GetAllReceiveData ()
     var table = $('#tblSocialProgram');
 
     table.find("tbody tr").remove();
-    lstReceiveData.forEach(function (data) {
-        table.append("<tr><td>" + data.id + "</td><td>" + data.first_name + "</td><td>" + data.last_name + "</td><td>" + data.email + "</td><td>" + data.program +"</td><td>" + data.date + "</td><td>" + data.value +"</td><td>" + data.IBAN +"</td></tr>");
+    console.log(lstReceiveData);
+
+
+     lstReceiveData.forEach(function (data) {
+
+        if(data.is_Elegible != "N")
+        {
+            table.append("<tr><td>" + data.id + "</td><td>" + data.first_name + "</td><td>" + data.last_name + "</td><td>" + data.email + "</td><td>" + data.program +"</td><td>" + data.date + "</td><td>" + data.value +"</td><td><img height='20' src='https://www.lupusuk.org.uk/wp-content/uploads/2018/03/Green-Tick-PNG-Picture.png'/></td></tr>");
+        }
+        else
+        {
+            table.append("<tr><td>" + data.id + "</td><td>" + data.first_name + "</td><td>" + data.last_name + "</td><td>" + data.email + "</td><td>" + data.program +"</td><td>" + data.date + "</td><td>" + data.value +"</td><td><img height='20' src='https://cdn4.iconfinder.com/data/icons/basic-elements-circle/614/754_-_Cancel-128.png'/></td></tr>");
+        
+        }
+
     });
 
-
-    
 
 }

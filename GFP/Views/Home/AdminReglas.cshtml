@@ -1,7 +1,8 @@
 ﻿@{
-    ViewData["Title"] = "Aplicacion de Reglas";
+    ViewData["Title"] = "Administracion de Reglas";
 }
 <h1>@ViewData["Title"]</h1>
+
 
 
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.6/css/jquery.dataTables.min.css" />
@@ -11,24 +12,20 @@
 <div class="text-center">
     <div id="pnlTableSocialProgram" class="panel-body">
         <div class="table-responsive">
-            <table id="tblSocialProgramRules" class="display">
+            <table id="tblAdminRules" class="display">
                 <thead>
                     <tr>
                         <th>ID</th>
                         <th>Nombre</th>
-                        <th>Apellido</th>
-                        <th>Email</th>
-                        <th>Programa</th>
-                        <th>Fecha</th>
-                        <th>Monto</th>
-                        <th>Reglas</th>
+                        <th>Parametro</th>
+                        <th>Descripcion</th>
+                        <th>Activo</th>
                     </tr>
                 </thead>
             </table>
         </div>
     </div>
 </div>
-
-<script src="~/js/rules.js" asp-append-version="true"></script>
+<script src="~/js/adminRules.js" asp-append-version="true"></script>
 
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js" />

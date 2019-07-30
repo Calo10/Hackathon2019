@@ -20,11 +20,13 @@ namespace GFP.Models
         [Index(5)]
         public string date { get; set; }
         [Index(6)]
-        public int? value { get; set; }
+        public string value { get; set; }
         [Index(7)]
         public string IBAN { get; set; }
         [Ignore]
-        public string Is_Elegible { get; set; }
+        public string is_Elegible { get; set; }
+        [Ignore]
+        public string rules_break { get; set; }
 
         public SocialProgramModel()
         {
