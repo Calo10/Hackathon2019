@@ -150,6 +150,7 @@ namespace GFP.Services
         public async Task<bool> TresuryValidation()
         {
             var data = await _receiveData.GetTresureForValidation();
+            var response = 0;
 
             if (data == null)
                 throw new ArgumentException(string.Format("Format Error"));
@@ -162,16 +163,16 @@ namespace GFP.Services
 
                 if (ans)
                 {
-                    var response = _receiveData.UpdateSocialProgramTresuryValidationAsync(item.BatchId, "S");
+                    response = await _receiveData.UpdateSocialProgramTresuryValidationAsync(item.BatchId, "S");
                 }
                 else
                 {
-                    var response = _receiveData.UpdateSocialProgramTresuryValidationAsync(item.BatchId, "N");
+                    response = await _receiveData.UpdateSocialProgramTresuryValidationAsync(item.BatchId, "N");
                 }
 
             }
 
-            return true;
+            return response == 0 ? false : true;
         }
 
         private bool TresuryConsult(TresuryBatchValidationModel tresuryBatchValidationModel)
