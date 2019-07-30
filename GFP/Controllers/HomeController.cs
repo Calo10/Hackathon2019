@@ -20,6 +20,31 @@ namespace GFP.Controllers
             return View();
         }
 
+        public IActionResult Elegible()
+        {
+            return View();
+        }
+
+        public IActionResult Reglas()
+        {
+            return View();
+        }
+
+        public IActionResult Consolidado()
+        {
+            return View();
+        }
+
+        public IActionResult EnvioSinpe()
+        {
+            return View();
+        }
+
+        public IActionResult Historico()
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

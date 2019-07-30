@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GFP.Models;
+using GFP.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -31,6 +33,9 @@ namespace GFP
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            //DEPENDENCY INJECTION
+            services.AddTransient<IReceiveData>(s => new ReceiveData("server=localhost;user=root;database=hackathon;port=3306;password=creativecalo10;SslMode=none"));
+            services.AddSingleton<IReceiveDataProvider, ReceiveDataProvider>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
